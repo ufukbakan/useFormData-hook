@@ -21,6 +21,8 @@
     "bakan",
     "ufukbakan"
   ],
+  "repository": "https://github.com/ufukbakan/useForm-hook",
+  "homepage": "https://github.com/ufukbakan/useForm-hook#readme",
   "author": "Ufuk Bakan",
   "license": "MIT",
   "dependencies": {
