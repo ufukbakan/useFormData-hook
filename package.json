@@ -1,0 +1,29 @@
+{
+  "name": "useform",
+  "version": "1.0.0",
+  "description": "useForm hook for React uncontrolled inputs.",
+  "main": "index.ts",
+  "scripts": {},
+  "keywords": [
+    "useForm",
+    "useform",
+    "use",
+    "form",
+    "field",
+    "hook",
+    "hooks",
+    "input",
+    "inputs",
+    "react",
+    "reactjs",
+    "react.js",
+    "ufuk",
+    "bakan",
+    "ufukbakan"
+  ],
+  "author": "Ufuk Bakan",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}
