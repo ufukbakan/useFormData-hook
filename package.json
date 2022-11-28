@@ -1,5 +1,5 @@
 {
-  "name": "useform",
+  "name": "useFormData-hook",
   "version": "1.0.0",
   "description": "useForm hook for React uncontrolled inputs.",
   "main": "index.ts",
@@ -21,8 +21,8 @@
     "bakan",
     "ufukbakan"
   ],
-  "repository": "https://github.com/ufukbakan/useForm-hook",
-  "homepage": "https://github.com/ufukbakan/useForm-hook#readme",
+  "repository": "https://github.com/ufukbakan/useFormData-hook",
+  "homepage": "https://github.com/ufukbakan/useFormData-hook#readme",
   "author": "Ufuk Bakan",
   "license": "MIT",
   "dependencies": {
