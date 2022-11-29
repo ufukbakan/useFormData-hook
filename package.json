@@ -1,5 +1,5 @@
 {
-  "name": "useFormData-hook",
+  "name": "useformdata-hook",
   "version": "1.0.0",
   "description": "useForm hook for React uncontrolled inputs.",
   "main": "index.ts",
