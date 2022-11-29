@@ -1,10 +1,10 @@
 import React from 'react'
+import useFormData from '.';
 import './App.css'
-import useForm from ".";
 
 export default function App() {
 
-    const formData = useForm();
+    const formData = useFormData();
 
     return (
         <div className='grid'>

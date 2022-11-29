@@ -8,7 +8,7 @@ type UseFormProps = {
     form: HTMLFormElement | HTMLElement | Element
 }
 
-export default function useForm(props?: UseFormProps) {
+export default function useFormData(props?: UseFormProps) {
     const form = props?.form || document.querySelector("form");
     const [formData, setFormData] = useState<FormData>({});
     const [inputs, setInputs] = useState<NodeListOf<HTMLInputElement>>();
