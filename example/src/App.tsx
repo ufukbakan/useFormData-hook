@@ -14,7 +14,7 @@ export default function App() {
                     <label>birthDate <input type="date" name='birthDate' /></label>
                     <label>favColor <input type="color" name='favouriteColor' /></label>
                     <label>accept <input type="checkbox" defaultChecked name='accept' /></label>
-                    <textarea name='comment'></textarea>
+                    <label>comment <textarea name='comment'></textarea></label>
                 </form>
             </div>
             <div className="output">
