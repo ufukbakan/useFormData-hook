@@ -1,9 +1,12 @@
 {
   "name": "useformdata-hook",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "description": "useFormData hook for React uncontrolled inputs.",
   "main": "index.ts",
-  "scripts": {},
+  "scripts": {
+    "test": "nyc --reporter text --reporter json-summary mocha ./**/*.test.[jt]s?(x)",
+    "badges": "npm run test && istanbul-badges-readme"
+  },
   "keywords": [
     "useForm",
     "useform",
@@ -31,5 +34,16 @@
   "license": "MIT",
   "dependencies": {
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^13.4.0",
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "chai": "^4.3.7",
+    "global-jsdom": "^8.6.0",
+    "istanbul-badges-readme": "^1.8.4",
+    "mocha": "^10.2.0",
+    "nyc": "^15.1.0",
+    "ts-node": "^10.9.1"
   }
 }

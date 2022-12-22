@@ -8,10 +8,19 @@ type UseFormProps = {
     form: HTMLFormElement | HTMLElement | Element
 }
 
-export default function useFormData(props?: UseFormProps) {
+export default function useFormData(props?: UseFormProps): FormData {
     const form = props?.form || document.querySelector("form");
     const [formData, setFormData] = useState<FormData>({});
     const [inputs, setInputs] = useState<NodeListOf<HTMLInputElement>>();
+    const observeCallback = (mutations: MutationRecord[]) => {
+        for (const mutation of mutations) {
+            if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0) {
+                updateInputs();
+                break;
+            }
+        }
+    }
+    const observer = new MutationObserver(observeCallback);
 
     useEffect(() => {
         updateInputs();
@@ -21,15 +30,21 @@ export default function useFormData(props?: UseFormProps) {
         if (form) {
             updateInputs();
             if (observer) {
-                observer.disconnect();
                 observer.observe(form, { childList: true, subtree: true })
             } else {
-                document.body.removeEventListener("DOMNodeInserted", updateInputs);
-                document.body.removeEventListener("DOMNodeRemoved", updateInputs);
                 document.body.addEventListener("DOMNodeInserted", updateInputs);
                 document.body.addEventListener("DOMNodeRemoved", updateInputs);
             }
         }
+        return (() => {
+            if (observer) {
+                observer.disconnect();
+            }
+            else {
+                document.body.removeEventListener("DOMNodeInserted", updateInputs);
+                document.body.removeEventListener("DOMNodeRemoved", updateInputs);
+            }
+        });
     }, [form])
 
     useEffect(() => {
@@ -41,16 +56,7 @@ export default function useFormData(props?: UseFormProps) {
         setInputs(form?.querySelectorAll("input,textarea"));
     }
 
-    const observeCallback = (mutations: MutationRecord[]) => {
-        for (const mutation of mutations) {
-            if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0) {
-                updateInputs();
-                break;
-            }
-        }
-    }
 
-    const observer = new MutationObserver(observeCallback);
 
     const updateFormData = () => {
         const newFormData: FormData = {};
