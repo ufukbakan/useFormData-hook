@@ -5,13 +5,14 @@ type FormData = {
 }
 
 type UseFormProps = {
-    form: HTMLFormElement | HTMLElement | Element
+    form?: HTMLFormElement | HTMLElement | Element,
+    legacyListeners?: boolean
 }
 
 export default function useFormData(props?: UseFormProps): FormData {
     const form = props?.form || document.querySelector("form");
     const [formData, setFormData] = useState<FormData>({});
-    const [inputs, setInputs] = useState<NodeListOf<HTMLInputElement>>();
+    const [inputs, setInputs] = useState<HTMLElement[]>([]);
     const observeCallback = (mutations: MutationRecord[]) => {
         for (const mutation of mutations) {
             if (mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0) {
@@ -29,7 +30,7 @@ export default function useFormData(props?: UseFormProps): FormData {
     useEffect(() => {
         if (form) {
             updateInputs();
-            if (observer) {
+            if (!props?.legacyListeners && observer) {
                 observer.observe(form, { childList: true, subtree: true })
             } else {
                 document.body.addEventListener("DOMNodeInserted", updateInputs);
@@ -37,7 +38,7 @@ export default function useFormData(props?: UseFormProps): FormData {
             }
         }
         return (() => {
-            if (observer) {
+            if (!props?.legacyListeners && observer) {
                 observer.disconnect();
             }
             else {
@@ -48,12 +49,23 @@ export default function useFormData(props?: UseFormProps): FormData {
     }, [form])
 
     useEffect(() => {
-        setEventListeners();
+        addEventListeners();
         updateFormData();
+        return () => {
+            removeEventListeners();
+        }
     }, [inputs]);
 
     const updateInputs = () => {
-        setInputs(form?.querySelectorAll("input,textarea"));
+        let inputElements: HTMLElement[] = Array.from(form?.querySelectorAll("input,textarea") || []);
+        inputElements = inputElements.filter(e => {
+            if (e instanceof HTMLTextAreaElement) {
+                return true;
+            } else if(e instanceof HTMLInputElement) {
+                return e.type != "file" && e.type != "submit" && e.type != "reset" && e.type != "button" && e.type != "image";
+            }
+        });
+        setInputs(inputElements);
     }
 
 
@@ -61,7 +73,13 @@ export default function useFormData(props?: UseFormProps): FormData {
     const updateFormData = () => {
         const newFormData: FormData = {};
         inputs?.forEach(input => {
-            if (input.type != "file") {
+            if (input instanceof HTMLInputElement) {
+                if (input.type != "radio") {
+                    newFormData[input.name] = getValue(input);
+                } else if (!newFormData[input.name] && input.type == "radio") {
+                    newFormData[input.name] = getValue(inputs.find(i => i instanceof HTMLInputElement && i.type == "radio" && i.name == input.name && i.checked));
+                }
+            }else if(input instanceof HTMLTextAreaElement){
                 newFormData[input.name] = getValue(input);
             }
         });
@@ -73,15 +91,23 @@ export default function useFormData(props?: UseFormProps): FormData {
         setFormData((prevData: FormData) => ({ ...prevData, [inputElement.name]: getValue(inputElement) }));
     }
 
-    const setEventListeners = () => {
-        inputs?.forEach(input => input.removeEventListener("input", updateSingleData));
+    const addEventListeners = () => {
         inputs?.forEach(input => input.addEventListener("input", updateSingleData));
+        inputs?.forEach(input => input.addEventListener("change", updateSingleData));
     }
 
-    const getValue = (element: HTMLInputElement) => {
-        if (element.type == "radio" || element.type == "checkbox") {
+    const removeEventListeners = () => {
+        inputs?.forEach(input => input.removeEventListener("input", updateSingleData));
+        inputs?.forEach(input => input.removeEventListener("change", updateSingleData));
+    }
+
+    const getValue = (element: HTMLElement | undefined ) => {
+        if (!element) {
+            return undefined;
+        }
+        if (element instanceof HTMLInputElement && element.type == "checkbox") {
             return element.checked;
-        } else {
+        } else if(element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
             return element.value;
         }
     }
