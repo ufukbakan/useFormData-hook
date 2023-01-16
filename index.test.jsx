@@ -54,23 +54,23 @@ describe("Useformdata Hook Test", () => {
             "week": ""
         });
 
-        const checkbox = container.querySelector("input[name='checkbox']") as HTMLElement;
-        const color = container.querySelector("input[name='color']") as HTMLElement;
-        const email = container.querySelector("input[name='email']") as HTMLElement;
-        const date = container.querySelector("input[name='date']") as HTMLElement;
-        const datetime = container.querySelector("input[name='datetime-local']") as HTMLElement;
-        const month = container.querySelector("input[name='month']") as HTMLElement;
-        const week = container.querySelector("input[name='week']") as HTMLElement;
-        const time = container.querySelector("input[name='time']") as HTMLElement;
-        const password = container.querySelector("input[name='password']") as HTMLElement;
-        const radio1 = container.querySelector("#radio1") as HTMLElement;
-        const radio2 = container.querySelector("#radio2") as HTMLElement;
-        const range = container.querySelector("input[name='range']") as HTMLElement;
-        const search = container.querySelector("input[name='search']") as HTMLElement;
-        const tel = container.querySelector("input[name='tel']") as HTMLElement;
-        const textarea = container.querySelector("textarea") as HTMLElement;
-        const textbox = container.querySelector("input[name='textbox']") as HTMLElement;
-        const url = container.querySelector("input[name='url']") as HTMLElement;
+        const checkbox = container.querySelector("input[name='checkbox']");
+        const color = container.querySelector("input[name='color']");
+        const email = container.querySelector("input[name='email']");
+        const date = container.querySelector("input[name='date']");
+        const datetime = container.querySelector("input[name='datetime-local']");
+        const month = container.querySelector("input[name='month']");
+        const week = container.querySelector("input[name='week']");
+        const time = container.querySelector("input[name='time']");
+        const password = container.querySelector("input[name='password']");
+        const radio1 = container.querySelector("#radio1");
+        const radio2 = container.querySelector("#radio2");
+        const range = container.querySelector("input[name='range']");
+        const search = container.querySelector("input[name='search']");
+        const tel = container.querySelector("input[name='tel']");
+        const textarea = container.querySelector("textarea");
+        const textbox = container.querySelector("input[name='textbox']");
+        const url = container.querySelector("input[name='url']");
 
         fireEvent.click(checkbox);
         fireEvent.change(color, { target: { value: "#00ff00" } });
@@ -110,7 +110,7 @@ describe("Useformdata Hook Test", () => {
             "week": "2023-W01",
         });
 
-        const form = container.querySelector("form") as HTMLFormElement;
+        const form = container.querySelector("form");
         form.removeChild(checkbox);
         form.removeChild(color);
         form.removeChild(email);
@@ -156,8 +156,8 @@ describe("Useformdata Hook Test", () => {
             "color": "#ffffff",
         });
 
-        const checkbox = container.querySelector("input[name='checkbox']") as HTMLElement;
-        const form = container.querySelector("form") as HTMLFormElement;
+        const checkbox = container.querySelector("input[name='checkbox']");
+        const form = container.querySelector("form");
         form.removeChild(checkbox);
 
         formData = renderHook(() => useFormData()).result.current;
