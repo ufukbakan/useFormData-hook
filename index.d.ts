@@ -3,7 +3,7 @@ type FormData = {
 }
 
 type UseFormProps = {
-    form?: HTMLFormElement | HTMLElement | Element,
+    form?: HTMLFormElement | HTMLElement | Element | null,
     legacyListeners?: boolean
 }
 
