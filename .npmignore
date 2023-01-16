@@ -1,4 +1,10 @@
-example
-node_modules
 .nyc_output
 coverage
+example
+node_modules
+.gitattributes
+.gitignore
+.mocharc.json
+*.test.*
+pnpm-lock.yaml
+README.md
